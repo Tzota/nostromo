@@ -1,0 +1,33 @@
+@startuml
+' skinparam linetype polyline
+' skinparam linetype ortho
+
+agent Detector1
+agent Detector2
+
+node RaspberryPi {
+    database MainDb  {
+        storage DetectorsData
+    }
+    frame OuterLayer {
+        component Harvester
+        queue EventBus
+    }
+    frame Main {
+        component Core
+        component MuThUr
+    }
+}
+
+Main -[hidden]down- OuterLayer
+' OuterLayer -down- Main
+
+Detector1 -> Harvester
+Detector2 -> Harvester
+Harvester -> EventBus
+Core .> EventBus
+Core .> MainDb
+MuThUr ~> EventBus
+MuThUr ~> MainDb
+
+@enduml
