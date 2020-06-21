@@ -1,7 +1,9 @@
-@startuml
+@startuml deployment
 ' skinparam linetype polyline
 ' skinparam linetype ortho
 
+interface bt1
+interface bt2
 agent Detector1
 agent Detector2
 
@@ -10,24 +12,29 @@ node RaspberryPi {
         storage DetectorsData
     }
     frame OuterLayer {
-        component Harvester
-        queue EventBus
+        component Harvester <<D.M.Parker>>
+        queue EventBus <<S.E.Brett>>
     }
     frame Main {
-        component Core
-        component MuThUr
+        component Core <<A.K.Dallas>>
+        component TgBot <<MuThUr>>
     }
 }
 
 Main -[hidden]down- OuterLayer
-' OuterLayer -down- Main
+Main -[hidden]up- MainDb
+MainDb -[hidden]down-Main
 
-Detector1 -> Harvester
-Detector2 -> Harvester
-Harvester -> EventBus
+Detector1 -> bt1
+Harvester -> bt1
+
+bt2 <- Detector2
+Harvester -> bt2
+
+Harvester -up-> EventBus
 Core .> EventBus
 Core .> MainDb
-MuThUr ~> EventBus
-MuThUr ~> MainDb
+TgBot ~> EventBus
+TgBot ~> MainDb
 
 @enduml
