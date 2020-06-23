@@ -1,4 +1,4 @@
-@startuml
+@startuml MainDB
 
 ' hide the spot
 hide circle
@@ -6,33 +6,85 @@ hide circle
 ' avoid problems with angled crows feet
 skinparam linetype ortho
 
-entity "Entity01" as e01 {
-  *e1_id : number <<generated>>
-  --
-  *name : text
-  description : text
+package "dictionaries" {
+  entity sensor_type {
+    *id : number <<generated>>
+    --
+    *name : text
+    description : text
+  }
+  entity place {
+    *id : number <<generated>>
+    --
+    *name : text
+    description : text
+  }
 }
 
-entity "Entity02" as e02 {
-  *e2_id : number <<generated>>
-  --
-  *e1_id : number <<FK>>
-  other_details : text
+package "instances" {
+  entity sensor {
+    *id : number <<generated>>
+    --
+    *sensor_type_id : number <<FK>>
+    *address : string
+    description : text
+  }
+
+  entity source {
+    *id : number <<generated>>
+    --
+    sensor_id : number <<FK>>
+    place_id : number <<FK>>
+  }
 }
 
-entity "Entity03" as e03 {
-  *e3_id : number <<generated>>
-  --
-  e1_id : number <<FK>>
-  other_details : text
-}
+
+
+' Схлопнуть source в поле place_id в sensor?..
+
+
+sensor }o--|| sensor_type
+source ||--|| sensor
+source }o--|| place
+
+
+' Type	Symbol
+' Zero or One	|o--
+' Exactly One	||--
+' Zero or Many	}o--
+' One or Many	}|--
+
+
+
+
+' entity "Entity01" as e01 {
+'   *e1_id : number <<generated>>
+'   --
+'   *name : text
+'   description : text
+' }
+
+' entity "Entity02" as e02 {
+'   *e2_id : number <<generated>>
+'   --
+'   *e1_id : number <<FK>>
+'   other_details : text
+' }
+
+' entity "Entity03" as e03 {
+'   *e3_id : number <<generated>>
+'   --
+'   e1_id : number <<FK>>
+'   other_details : text
+' }
 
 ' e01 ||..o{ e02
 ' e01 |o..o{ e03
 
-e01 o-- e02
+' e01 o-- e02
 
-Class01 "1" *-- "*" Class02 : contains
-Class03 o-- Class04 : aggregation
-Class05 --> "1" Class06
+' Class01 "1" *-- "*" Class02 : contains
+' Class03 o-- Class04 : aggregation
+' Class05 --> "1" Class06
+
 @enduml
