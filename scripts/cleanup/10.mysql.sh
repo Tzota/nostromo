@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-docker start nostromo-mysql
+nostromo-mysql-volume:/var/lib/mysql
