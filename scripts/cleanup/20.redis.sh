@@ -1,27 +1,11 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-if [ $UID -ne 0 ]
-then
-  echo "You are NOT root!"
-  exit 1
-fi
-
-ARCH=$(uname -m)
-if [ $ARCH = "armv7l" ]
-then
-    #maybe hypriot/redis is good too
-    REDIS_IMAGE=arm32v7/redis
-elif [ $ARCH = "x86_64" ]
-then
-    REDIS_IMAGE=redis
-else
-    echo  "UNKNOWN ARCHITECTURE"
-    exit 1
-fi
+_dirname="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+source "${_dirname}/../_common/die_if_not_root.sh"
+source "${_dirname}/../_common/variables.sh"
 
 #######################
-
 
 docker container rm nostromo-redis
 
@@ -29,4 +13,5 @@ docker image rm $REDIS_IMAGE
 
 rm -rf /opt/nostromo-redis/
 
-# clean up vm.overcommit_memory = 1 from /etc/sysctl.conf
+sed -i '/tzota - prepare for redis/d' /etc/sysctl.conf
+sed -i '/vm.overcommit_memory = 1/d' /etc/sysctl.conf
