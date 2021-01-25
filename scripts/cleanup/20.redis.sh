@@ -13,5 +13,5 @@ docker image rm $REDIS_IMAGE
 
 rm -rf /opt/nostromo-redis/
 
-sed -i '/tzota - prepare for redis/d' /etc/sysctl.conf
-sed -i '/vm.overcommit_memory = 1/d' /etc/sysctl.conf
+# sed -i '/tzota - prepare for redis/d' /etc/sysctl.conf
+# sed -i '/vm.overcommit_memory = 1/d' /etc/sysctl.conf

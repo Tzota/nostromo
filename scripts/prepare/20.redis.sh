@@ -8,7 +8,8 @@ source "${_dirname}/../_common/variables.sh"
 #######################
 
 # https://redis.io/topics/admin
-grep -qx 'vm.overcommit_memory = 1' /etc/sysctl.conf || printf "\n\n# tzota - prepare for redis\nvm.overcommit_memory = 1\n\n" >> /etc/sysctl.conf
+# это надо делать внутри контейнера :(
+# grep -qx 'vm.overcommit_memory = 1' /etc/sysctl.conf || printf "\n\n# tzota - prepare for redis\nvm.overcommit_memory = 1\n\n" >> /etc/sysctl.conf
 
 docker pull $REDIS_IMAGE
 
@@ -19,6 +20,8 @@ REDIS_VERSION=$(docker image inspect $REDIS_IMAGE | grep -e REDIS_VERSION | head
 # echo $REDIS_VERSION
 curl -s -o /opt/nostromo-redis/etc/redis.conf https://raw.githubusercontent.com/antirez/redis/$REDIS_VERSION/redis.conf
 sed -i -E 's/^dir .\/$/dir \/data\/bases/' /opt/nostromo-redis/etc/redis.conf
+sed -i -E 's/^bind 127.0.0.1$/# bind 127.0.0.1/' /opt/nostromo-redis/etc/redis.conf
+sed -i -E 's/^protected-mode yes$/# protected-mode no/' /opt/nostromo-redis/etc/redis.conf
 
 docker create \
     --name nostromo-redis \
