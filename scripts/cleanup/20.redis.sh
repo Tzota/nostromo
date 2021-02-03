@@ -7,11 +7,13 @@ source "${_dirname}/../_common/variables.sh"
 
 #######################
 
+docker container stop nostromo-redis
+
 docker container rm nostromo-redis
 
 docker image rm $REDIS_IMAGE
 
-rm -rf /opt/nostromo-redis/
+rm -rf $REDIS_ROOT/nostromo-redis/
 
 # sed -i '/tzota - prepare for redis/d' /etc/sysctl.conf
 # sed -i '/vm.overcommit_memory = 1/d' /etc/sysctl.conf

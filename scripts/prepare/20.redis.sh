@@ -13,21 +13,21 @@ source "${_dirname}/../_common/variables.sh"
 
 docker pull $REDIS_IMAGE
 
-mkdir -p /opt/nostromo-redis/{etc,data}
-mkdir -p /opt/nostromo-redis/data/{bases,log}
+mkdir -p $REDIS_ROOT/nostromo-redis/{etc,data}
+mkdir -p $REDIS_ROOT/nostromo-redis/data/{bases,log}
 
 REDIS_VERSION=$(docker image inspect $REDIS_IMAGE | grep -e REDIS_VERSION | head -1 | sed -E 's/\s*"REDIS_VERSION=([0-9\.]*)",/\1/')
 # echo $REDIS_VERSION
-curl -s -o /opt/nostromo-redis/etc/redis.conf https://raw.githubusercontent.com/antirez/redis/$REDIS_VERSION/redis.conf
-sed -i -E 's/^dir .\/$/dir \/data\/bases/' /opt/nostromo-redis/etc/redis.conf
-sed -i -E 's/^bind 127.0.0.1$/# bind 127.0.0.1/' /opt/nostromo-redis/etc/redis.conf
-sed -i -E 's/^protected-mode yes$/# protected-mode no/' /opt/nostromo-redis/etc/redis.conf
+curl -s -o $REDIS_ROOT/nostromo-redis/etc/redis.conf https://raw.githubusercontent.com/antirez/redis/$REDIS_VERSION/redis.conf
+sed -i -E 's/^dir .\/$/dir \/data\/bases/' $REDIS_ROOT/nostromo-redis/etc/redis.conf
+sed -i -E 's/^bind 127.0.0.1$/# bind 127.0.0.1/' $REDIS_ROOT/nostromo-redis/etc/redis.conf
+sed -i -E 's/^protected-mode yes$/# protected-mode no/' $REDIS_ROOT/nostromo-redis/etc/redis.conf
 
 docker create \
     --name nostromo-redis \
     -p 127.0.0.1:6379:6379 \
-    -v /opt/nostromo-redis/etc/redis.conf:/usr/local/etc/redis/redis.conf \
-    -v /opt/nostromo-redis/data:/data \
+    -v $REDIS_ROOT/nostromo-redis/etc/redis.conf:/usr/local/etc/redis/redis.conf \
+    -v $REDIS_ROOT/nostromo-redis/data:/data \
     --restart unless-stopped \
     $REDIS_IMAGE \
     redis-server /usr/local/etc/redis/redis.conf \
