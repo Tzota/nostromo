@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
-set -euo pipefail
+# set -euo pipefail
 
 sudo curl -sSL https://get.docker.com | sh

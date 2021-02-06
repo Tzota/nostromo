@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-set -euo pipefail
+# set -euo pipefail
 
 # maybe clover/mysqld and clover/mysql are good too
 docker create \

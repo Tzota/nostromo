@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
-set -euo pipefail
+# set -euo pipefail
 
-docker start nostromo-redis
-# docker exec -it nostromo-redis redis-cli
+docker start nostromo-brett || exit 1
+docker logs nostromo-brett
+# docker exec -it nostromo-brett redis-cli

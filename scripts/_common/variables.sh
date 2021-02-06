@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
-set -euo pipefail
+
+set -e
 
 # machine type
 ARCH=$(uname -m)
@@ -27,3 +28,5 @@ REDIS_ROOT="/opt"
 # REDIS_ROOT="${EXTERNAL_MEDIA}"
 # fi
 echo "REDIS_ROOT=${REDIS_ROOT}"
+
+set +e
