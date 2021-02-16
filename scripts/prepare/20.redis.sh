@@ -3,7 +3,6 @@
 set -e
 
 _dirname="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-source "${_dirname}/../_common/die_if_not_root.sh"
 source "${_dirname}/../_common/variables.sh"
 
 #######################
@@ -25,7 +24,7 @@ sed -i -E 's/^bind 127.0.0.1$/# bind 127.0.0.1/' $REDIS_ROOT/nostromo-brett/etc/
 sed -i -E 's/^protected-mode yes$/# protected-mode no/' $REDIS_ROOT/nostromo-brett/etc/redis.conf
 
 docker create \
-    --name nostromo-brett \
+    --name $BRETT_CONTAINER_NAME \
     -p 127.0.0.1:6379:6379 \
     -v $REDIS_ROOT/nostromo-brett/etc/redis.conf:/usr/local/etc/redis/redis.conf \
     -v $REDIS_ROOT/nostromo-brett/data:/data \

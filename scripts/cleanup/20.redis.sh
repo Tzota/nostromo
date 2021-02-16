@@ -2,21 +2,9 @@
 # set -euo pipefail
 
 _dirname="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-source "${_dirname}/../_common/die_if_not_root.sh" || exit 1
 source "${_dirname}/../_common/variables.sh" || exit 1
 
-#######################
-hard=0
- while :; do
-    case "${1-}" in
-    -h | --hard) hard=1 ;;
-    -v | --verbose) set -x ;;
-    -?*) die "Unknown option: $1" ;;
-    *) break ;;
-    esac
-    shift
-  done
-#######################
+source "${_dirname}/../_common/cleanup.sh" || exit 1
 
 docker container stop nostromo-brett
 

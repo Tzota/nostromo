@@ -11,4 +11,6 @@ docker create \
     --network=host \
     $PARKER_IMAGE:0.0.1
 
+# "${_dirname}/../_common/timezone.sh" $PARKER_CONTAINER_NAME
+
 set +e

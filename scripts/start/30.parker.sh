@@ -5,4 +5,5 @@ _dirname="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source "${_dirname}/../_common/variables.sh"
 
 docker start $PARKER_CONTAINER_NAME || exit 1
-docker logs -f $PARKER_CONTAINER_NAME
+sleep 5s
+docker logs $PARKER_CONTAINER_NAME
