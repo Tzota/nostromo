@@ -4,6 +4,6 @@
 _dirname="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source "${_dirname}/../_common/variables.sh"
 
-docker start $REDIS_IMAGE || exit 1
-docker logs $REDIS_IMAGE
+docker start $BRETT_CONTAINER_NAME || exit 1
+docker logs $BRETT_CONTAINER_NAME
 # docker exec -it nostromo-brett redis-cli

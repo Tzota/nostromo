@@ -25,7 +25,7 @@ else
     echo  "UNKNOWN ARCHITECTURE"
     exit 1
 fi
-PARKER_IMAGE=nostromo-parker-redis-stream-$PARKER_ARCH
+PARKER_IMAGE=tzota/nostromo-parker-redis-stream-$PARKER_ARCH
 
 echo "REDIS_IMAGE=${REDIS_IMAGE}"
 echo "PARKER_IMAGE=${PARKER_IMAGE}"
