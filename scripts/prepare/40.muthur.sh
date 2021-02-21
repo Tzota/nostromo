@@ -27,7 +27,6 @@ if [ $ARCH = "armv7l" ]
 then
     docker exec $MUTHUR_CONTAINER_NAME apt-get -y update
     docker exec $MUTHUR_CONTAINER_NAME apt-get -y install systemd
-    docker exec $MUTHUR_CONTAINER_NAME date -d '+3 hour' '+%F %T'
 fi
 
 "${_dirname}/../_common/timezone.sh" $MUTHUR_CONTAINER_NAME
