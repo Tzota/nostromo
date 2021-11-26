@@ -9,7 +9,7 @@ docker create \
     --name $PARKER_CONTAINER_NAME \
     --env REDIS_SERVER=127.0.0.1 \
     --network=host \
-    $PARKER_IMAGE:0.0.1
+    $PARKER_IMAGE:latest
 
 # "${_dirname}/../_common/timezone.sh" $PARKER_CONTAINER_NAME
 
