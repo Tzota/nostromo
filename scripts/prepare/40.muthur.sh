@@ -19,7 +19,7 @@ docker create \
     --env REDIS_SERVER=redis \
     --env BOT_ID=$MUTHUR_BOT_ID \
     $ARM_PART \
-    $MUTHUR_IMAGE:0.0.1
+    $MUTHUR_IMAGE:latest
 
 docker start $MUTHUR_CONTAINER_NAME
 
