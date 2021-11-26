@@ -20,8 +20,13 @@ REDIS_VERSION=$(docker image inspect $REDIS_IMAGE | grep -e REDIS_VERSION | head
 # echo $REDIS_VERSION
 curl -s -o $REDIS_ROOT/nostromo-brett/etc/redis.conf https://raw.githubusercontent.com/antirez/redis/$REDIS_VERSION/redis.conf
 sed -i -E 's/^dir .\/$/dir \/data\/bases/' $REDIS_ROOT/nostromo-brett/etc/redis.conf
-sed -i -E 's/^bind 127.0.0.1$/# bind 127.0.0.1/' $REDIS_ROOT/nostromo-brett/etc/redis.conf
-sed -i -E 's/^protected-mode yes$/# protected-mode no/' $REDIS_ROOT/nostromo-brett/etc/redis.conf
+
+echo '=============gonna let in everyone...'
+sed -i -E 's/^protected-mode yes$/protected-mode no/' $REDIS_ROOT/nostromo-brett/etc/redis.conf
+grep -E '^protected-mode no$' $REDIS_ROOT/nostromo-brett/etc/redis.conf || exit 1
+echo '=============...from everywhere'
+sed -i -E 's/^bind 127.0.0.1 -::1$/# bind 127.0.0.1 -::1/' $REDIS_ROOT/nostromo-brett/etc/redis.conf
+grep -E '^# bind 127.0.0.1 -::1$' $REDIS_ROOT/nostromo-brett/etc/redis.conf || exit 1 # тут был кейс, когда формат конфига поменяли...
 
 docker create \
     --name $BRETT_CONTAINER_NAME \
