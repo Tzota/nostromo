@@ -12,7 +12,7 @@ docker container rm nostromo-brett
 
 if [[ $hard -gt 0 ]]
 then
-    docker image rm $REDIS_IMAGE
+    docker images -a | grep -E $REDIS_IMAGE | awk '{ print $1":"$2 }' | xargs --no-run-if-empty docker rmi
 fi
 
 rm -rf $REDIS_ROOT/nostromo-brett/

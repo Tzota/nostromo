@@ -11,5 +11,5 @@ docker container rm $PARKER_CONTAINER_NAME
 
 if [[ $hard -gt 0 ]]
 then
-    docker image rm $PARKER_IMAGE
+    docker images -a | grep -E $PARKER_IMAGE | awk '{ print $1":"$2 }' | xargs --no-run-if-empty docker rmi
 fi

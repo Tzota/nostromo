@@ -11,5 +11,5 @@ docker container rm $MUTHUR_CONTAINER_NAME
 
 if [[ $hard -gt 0 ]]
 then
-    docker image rm $MUTHUR_IMAGE
+    docker images -a | grep -E $MUTHUR_IMAGE | awk '{ print $1":"$2 }' | xargs --no-run-if-empty docker rmi
 fi
